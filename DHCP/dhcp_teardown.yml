@@ -1,0 +1,28 @@
+---
+- name: Update web servers
+  hosts: 192.168.3.22
+  remote_user: user1
+  become: yes
+
+  tasks:
+
+  - name: Stop Service
+    service:
+      name: isc-dhcp-server
+      state: stopped
+      enabled: no
+
+  - name: Remove DHCP Package
+    apt:
+      name: isc-dhcp-server
+      state: absent 
+
+  - name: Remove Configuration
+    file:
+      path: /etc/dhcp/dhcpd.conf
+      state: absent
+
+  - name: Remove Another Configuration
+    file:
+      path: /etc/default/isc-dhcp-server
+      state: absent

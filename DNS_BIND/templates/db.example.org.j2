@@ -1,0 +1,23 @@
+$TTL    604800
+@       IN      SOA     ns1.example.org. admin.example.org. (
+                              4         ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+;
+
+
+; name servers - NS records
+    IN      NS      ns1.example.org.
+    IN      NS      ns2.example.org.
+
+
+; name server - A records
+ns1.example.org.        IN      A        192.168.3.3
+ns2.example.org.        IN      A        192.168.3.4
+
+; 192.168.3.0/24 - A records
+host1.example.org.        IN      A        192.168.3.5
+host2.example.org.        IN      A        192.168.3.6
+host3.example.org.        IN      CNAME    host2.example.org.

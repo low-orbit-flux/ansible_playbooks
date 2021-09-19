@@ -1,0 +1,24 @@
+---
+- name: Update web servers
+  hosts: 192.168.3.22
+  remote_user: user1
+  become: yes
+
+  tasks:
+  - name: Install DHCP Package
+    apt:
+      name: isc-dhcp-server
+      state: latest
+  - name: Add Base Config File
+    template:
+      src: /home/user1/dhcpd.conf.j2
+      dest: /etc/dhcp/dhcpd.conf
+  - name: Add Another Config File
+    template:
+      src: /home/user1/isc-dhcp-server.j2
+      dest: /etc/default/isc-dhcp-server
+  - name: Start Service
+    service:
+      name: isc-dhcp-server
+      state: restarted
+      enabled: yes
