@@ -1,0 +1,18 @@
+$TTL    604800
+@       IN      SOA     {{ DNS_SERVER_NAME }}.{{ INITIAL_ZONE_NAME }}. admin.{{ INITIAL_ZONE_NAME }}. (
+                   {{ serial }}         ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+;
+
+; name servers - NS records
+      IN      NS      {{ DNS_SERVER_NAME }}.{{ INITIAL_ZONE_NAME }}.
+
+
+; PTR Records
+{{ DNS_SERVER_IP_ENTRY }}  IN      PTR     {{ DNS_SERVER_NAME }}.{{ INITIAL_ZONE_NAME}}.    
+
+; name server PTR Records
+

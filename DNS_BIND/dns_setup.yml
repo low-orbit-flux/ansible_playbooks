@@ -1,8 +1,16 @@
 ---
-- name: Update web servers
+- name: Setup DNS BIND Server
   hosts: 192.168.3.22
   remote_user: user1
   become: yes
+  vars:
+      DNS_SERVER_NAME: ns1
+      DNS_SERVER_IP: 192.168.3.22
+      DNS_SERVER_IP_ENTRY: 22.3
+      INITIAL_ZONE_NAME: lab.net
+      INITIAL_ZONE_IP: 192.168
+      INITIAL_ZONE_IP_R: 168.192
+      NETWORK: 192.168.3
 
   tasks:
   - name: Install DNS Packages
@@ -12,28 +20,37 @@
 
   - name: Add a Config File
     template:
-      src: /home/user1/bind9.j2
+      src: /home/user1/ansible_playbooks/DNS_BIND/templates/bind9.j2
       dest: /etc/default/bind9
 
   - name: Add a Config File
     template:
-      src: /home/user1/named.conf.options.j2
+      src: /home/user1/ansible_playbooks/DNS_BIND/templates/named.conf.options.j2
       dest: /etc/bind/named.conf.options
 
   - name: Add a Config File
     template:
-      src: /home/user1/named.conf.local.j2
+      src: /home/user1/ansible_playbooks/DNS_BIND/templates/named.conf.local.j2
       dest: /etc/bind/named.conf.local
 
+  - name: Use Time Since Epoc for Serial
+    command: "date +%s"
+    register: serial
+
+  - name: Create Directory
+    file:
+      path: /etc/bind/zones
+      state: directory
+            
   - name: Add Forward Zone File
     template:
-      src: /home/user1/db.example.org.j2
-      dest: /etc/bind/zones/db.example.org
+      src: /home/user1/ansible_playbooks/DNS_BIND/templates/db.forward_zone.j2
+      dest: /etc/bind/zones/db.{{ INITIAL_ZONE_NAME }}
 
   - name: Add Reverse Zone File
     template:
-      src: /home/user1/db.192.168.j2
-      dest: /etc/bind/zones/db.192.168
+      src: /home/user1/ansible_playbooks/DNS_BIND/templates/db.reverse_zone.j2
+      dest: /etc/bind/zones/db.{{ INITIAL_ZONE_IP }}
 
   - name: Open Firewall for Bind9
     ufw:

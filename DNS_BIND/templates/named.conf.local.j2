@@ -1,13 +1,9 @@
-zone "example.org" {
+zone "{{ INITIAL_ZONE_NAME }}" {
     type master;
-    file "/etc/bind/zones/db.example.org";   # zone file path
-    allow-transfer { 192.168.3.4; };         # ns2 private IP address - secondary
+    file "/etc/bind/zones/db.{{ INITIAL_ZONE_NAME }}";
 };
 
-
-
-zone "168.192.in-addr.arpa" {
+zone "{{ INITIAL_ZONE_IP_R }}.in-addr.arpa" {
     type master;
-    file "/etc/bind/zones/db.192.168";  # 192.168.0.0/24 subnet
-    allow-transfer { 192.168.3.4; };    # ns2 private IP address - secondary
+    file "/etc/bind/zones/db.{{ INITIAL_ZONE_IP }}"; 
 };

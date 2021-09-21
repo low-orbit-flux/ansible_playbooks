@@ -1,5 +1,5 @@
 ---
-- name: Update web servers
+- name: Setup DHCP Server
   hosts: 192.168.3.22
   remote_user: user1
   become: yes
