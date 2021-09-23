@@ -35,7 +35,10 @@
 
   - name: Use Time Since Epoc for Serial
     command: "date +%s"
-    register: serial
+    register: serial2
+
+  - set_fact:
+      serial: "{{ serial2.stdout }}"
 
   - name: Create Directory
     file:
@@ -57,11 +60,11 @@
       rule: allow
       name: Bind9 
 
-  - name: Start Service
-    service:
-      name: bind9
-      state: restarted
-      enabled: yes
+#  - name: Start Service
+#    service:
+#      name: bind9
+#      state: restarted
+#      enabled: yes
 
 
 

@@ -1,0 +1,51 @@
+---
+- name: Setup DNS BIND Server
+  hosts: 192.168.3.22
+  remote_user: user1
+  become: yes
+  vars:
+      DNS_SERVER_NAME: ns1
+      DNS_SERVER_IP: 192.168.3.22
+      DNS_SERVER_IP_ENTRY: 22.3
+      INITIAL_ZONE_NAME: lab.net
+      INITIAL_ZONE_IP: 192.168
+      INITIAL_ZONE_IP_R: 168.192
+      NETWORK: 192.168.3
+
+  tasks:
+    - name: DNS Entry
+      lineinfile:
+        path: /etc/bind/zones/db.{{ INITIAL_ZONE_NAME }}
+        line: esxi1	IN	A	192.168.3.181
+        
+    - name: DNS Entry
+      lineinfile:
+        path: /etc/bind/zones/db.{{ INITIAL_ZONE_NAME }}
+        line: esxi2	IN	A	192.168.3.182
+
+    - name: DNS Entry
+      lineinfile:
+        path: /etc/bind/zones/db.{{ INITIAL_ZONE_NAME }}
+        line: vcenter1	IN	A	192.168.3.183
+
+    - name: DNS Entry
+      lineinfile:
+        path: /etc/bind/zones/db.{{ INITIAL_ZONE_IP }}
+        line: 181.3	IN	PTR	esxi1.lab.net.
+        
+    - name: DNS Entry
+      lineinfile:
+        path: /etc/bind/zones/db.{{ INITIAL_ZONE_IP }}
+        line: 182.3	IN	PTR	esxi2.lab.net.
+
+    - name: DNS Entry
+      lineinfile:
+        path: /etc/bind/zones/db.{{ INITIAL_ZONE_IP }}
+        line: 183.3	IN	PTR	vcenter1.lab.net.
+
+    - name: Start Service
+      service:
+        name: bind9
+        state: restarted
+        enabled: yes
+
