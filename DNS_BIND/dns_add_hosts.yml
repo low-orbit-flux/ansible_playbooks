@@ -16,32 +16,53 @@
     - name: DNS Entry
       lineinfile:
         path: /etc/bind/zones/db.{{ INITIAL_ZONE_NAME }}
-        line: esxi1	IN	A	192.168.3.181
+        line: tiger1	IN	A	192.168.3.181
         
     - name: DNS Entry
       lineinfile:
         path: /etc/bind/zones/db.{{ INITIAL_ZONE_NAME }}
-        line: esxi2	IN	A	192.168.3.182
+        line: tiger2	IN	A	192.168.3.182
 
     - name: DNS Entry
       lineinfile:
         path: /etc/bind/zones/db.{{ INITIAL_ZONE_NAME }}
-        line: vcenter1	IN	A	192.168.3.183
+        line: zebra1	IN	A	192.168.3.183
+
+    - name: DNS Entry
+      lineinfile:
+        path: /etc/bind/zones/db.{{ INITIAL_ZONE_NAME }}
+        line: lion1	IN	A	192.168.3.184
+
+    - name: DNS Entry
+      lineinfile:
+        path: /etc/bind/zones/db.{{ INITIAL_ZONE_NAME }}
+        line: lion2	IN	A	192.168.3.185
 
     - name: DNS Entry
       lineinfile:
         path: /etc/bind/zones/db.{{ INITIAL_ZONE_IP }}
-        line: 181.3	IN	PTR	esxi1.lab.net.
+        line: 181.3	IN	PTR	tiger1.lab.net.
         
     - name: DNS Entry
       lineinfile:
         path: /etc/bind/zones/db.{{ INITIAL_ZONE_IP }}
-        line: 182.3	IN	PTR	esxi2.lab.net.
+        line: 182.3	IN	PTR	tiger2.lab.net.
 
     - name: DNS Entry
       lineinfile:
         path: /etc/bind/zones/db.{{ INITIAL_ZONE_IP }}
-        line: 183.3	IN	PTR	vcenter1.lab.net.
+        line: 183.3	IN	PTR	zebra1.lab.net.
+
+    - name: DNS Entry
+      lineinfile:
+        path: /etc/bind/zones/db.{{ INITIAL_ZONE_IP }}
+        line: 184.3	IN	PTR	lion1.lab.net.
+
+    - name: DNS Entry
+      lineinfile:
+        path: /etc/bind/zones/db.{{ INITIAL_ZONE_IP }}
+        line: 185.3	IN	PTR	lion2.lab.net.
+
 
     - name: Start Service
       service:

@@ -1,0 +1,23 @@
+---
+- name: Setup NGINX Server
+  hosts: web_servers
+  remote_user: user1
+  become: yes
+
+  tasks:
+
+
+  - name: Basically "apt-get update" 
+    apt:
+      update_cache: yes
+
+  - name: Stop Service
+    service:
+      name: nginx
+      state: stopped
+      enabled: no
+
+  - name: Remove NGINX Packages
+    apt:
+      name: nginx
+      state: absent

@@ -11,11 +11,11 @@
       state: latest
   - name: Add Base Config File
     template:
-      src: /home/user1/dhcpd.conf.j2
+      src: /home/user1/ansible_playbooks/DHCP/templates/dhcpd.conf.j2
       dest: /etc/dhcp/dhcpd.conf
   - name: Add Another Config File
     template:
-      src: /home/user1/isc-dhcp-server.j2
+      src: /home/user1/ansible_playbooks/DHCP/templates/isc-dhcp-server.j2
       dest: /etc/default/isc-dhcp-server
   - name: Start Service
     service:
